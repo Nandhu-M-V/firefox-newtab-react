@@ -3,19 +3,47 @@ import firefoxLogo from './assets/images/FF.png';
 import pen from './assets/images/editpen.png';
 import './App.css';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import {
-  Sheet,
-  SheetTrigger,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from '@/components/ui/sheet';
+interface News {
+  title: string;
+  description?: string;
+  url: string;
+  urlToImage?: string;
+}
+
+import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
 
 function App() {
+  const [news, setnews] = useState<News[]>([]);
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const response = await axios.get(
+          'https://newsapi.org/v2/top-headlines',
+          {
+            params: {
+              country: 'us',
+              apiKey: import.meta.env.VITE_NEWS_API_KEY,
+            },
+          }
+        );
+        setnews(response.data.articles);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchNews();
+  }, []);
+
+  useEffect(() => {
+    console.log(news);
+  }, [news]);
+
+  //   console.log(import.meta.env.VITE_NEWS_API_KEY);
+
   return (
     <div id="fullcontainer">
       <div
