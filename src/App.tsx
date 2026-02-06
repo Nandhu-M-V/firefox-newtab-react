@@ -1,6 +1,10 @@
 import bgimage from './assets/images/bg1.jpg';
 import firefoxLogo from './assets/images/FF.png';
+import pen from './assets/images/editpen.png';
 import './App.css';
+
+import { useState } from 'react';
+import axios from 'axios';
 
 import {
   Sheet,
@@ -18,7 +22,7 @@ function App() {
         className="w-full h-full overflow-scroll bg-cover bg-center fixed flex justify-center p-10"
         style={{ backgroundImage: `url(${bgimage})` }}
       >
-        <main className=" w-full max-w-7xl h-full flex flex-col items-center  ">
+        <main className=" w-full max-w-7xl h-full flex flex-col items-center ">
           <div
             id="logo-firefox"
             className=" text-white flex items-center gap-3 lg:absolute lg:left-12"
@@ -28,9 +32,7 @@ function App() {
           </div>
 
           <div id="search-holder" className=" w-full max-w-150 mt-4">
-            <button>
-              <img src="" alt="" />
-            </button>
+            <button>{/* <img src="" alt="" /> */}</button>
             <input
               className="bg-gray-600 text-white h-13 w-full max-w-150 rounded-md"
               type="search"
@@ -138,20 +140,17 @@ function App() {
           </section>
           <Sheet>
             <SheetTrigger>
-              <button className="ml-4 px-3 py-1 bg-blue-600 rounded-md text-white">
-                Open
+              <button className=" p-2 fixed z-10 right-10 bottom-5 bg-gray-600 hover:bg-gray-500 rounded-sm text-white">
+                <img src={pen} alt="edit" />
               </button>
             </SheetTrigger>
 
-            <SheetContent side="right" className="w-80">
-              <SheetHeader>
-                <SheetTitle>Shortcuts</SheetTitle>
-                <SheetDescription>Click any shortcut to go</SheetDescription>
-              </SheetHeader>
-
-              <div className="mt-4 grid grid-cols-3 gap-4">
-                <div className="bg-gray-600 w-16 h-16 rounded-2xl flex items-center justify-center text-white"></div>
-              </div>
+            <SheetContent side="right" className=" w-110 bg-gray-700">
+              <div className="h-90 bg-amber-200"></div>
+              <hr />
+              <div className="h-54 bg-blue-200"></div>
+              <hr />
+              <div className=""></div>
             </SheetContent>
           </Sheet>
         </main>
