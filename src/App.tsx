@@ -38,9 +38,9 @@ function App() {
     fetchNews();
   }, []);
 
-  useEffect(() => {
-    console.log(news);
-  }, [news]);
+  //   useEffect(() => {
+  //     console.log(news);
+  //   }, [news]);
 
   //   console.log(import.meta.env.VITE_NEWS_API_KEY);
 
@@ -60,7 +60,7 @@ function App() {
           </div>
 
           <div id="search-holder" className=" w-full max-w-150 mt-4">
-            <button>{/* <img src="" alt="" /> */}</button>
+            <button>{/* <img src="" alt="" /> */} </button>
             <input
               className="bg-gray-600 text-white h-13 w-full max-w-150 rounded-md"
               type="search"
@@ -73,28 +73,28 @@ function App() {
             className="grid lg:grid-cols-8 md:grid-cols-6 sm:grid-cols-3 grid-cols-3 gap-14 mb-10 mt-10 "
           >
             <div className="bg-gray-600 opacity-80 text-white w-16 h-16 rounded-2xl">
-              <img src="" alt="" />
+              {/* <img src="" alt="" /> */}
             </div>
             <div className="bg-gray-600 w-16 h-16 text-white rounded-2xl">
-              <img src="" alt="" />
+              {/* <img src="" alt="" /> */}
             </div>
             <div className="bg-gray-600 w-16 h-16 text-white rounded-2xl">
-              <img src="" alt="" />
+              {/* <img src="" alt="" /> */}
             </div>
             <div className="bg-gray-600 w-16 h-16 text-white rounded-2xl">
-              <img src="" alt="" />
+              {/* <img src="" alt="" /> */}
             </div>
             <div className="bg-gray-600 w-16 h-16 text-white rounded-2xl">
-              <img src="" alt="" />
+              {/* <img src="" alt="" /> */}
             </div>
             <div className="bg-gray-600 w-16 h-16 text-white rounded-2xl">
-              <img src="" alt="" />
+              {/* <img src="" alt="" /> */}
             </div>
             <div className="bg-gray-600 w-16 h-16 text-white rounded-2xl">
-              <img src="" alt="" />
+              {/* <img src="" alt="" /> */}
             </div>
             <div className="bg-gray-600 w-16 h-16 text-white rounded-2xl">
-              <img src="" alt="" />
+              {/* <img src="" alt="" /> */}
             </div>
           </div>
 
@@ -168,9 +168,9 @@ function App() {
           </section>
           <Sheet>
             <SheetTrigger>
-              <button className=" p-2 fixed z-10 right-10 bottom-5 bg-gray-600 hover:bg-gray-500 rounded-sm text-white">
+              <a className=" p-2 fixed z-10 right-10 bottom-5 bg-gray-600 hover:bg-gray-500 rounded-sm text-white">
                 <img src={pen} alt="edit" />
-              </button>
+              </a>
             </SheetTrigger>
 
             <SheetContent side="right" className=" w-110 bg-gray-700">
