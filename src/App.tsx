@@ -38,9 +38,9 @@ function App() {
     fetchNews();
   }, []);
 
-  //   useEffect(() => {
-  //     console.log(news);
-  //   }, [news]);
+  useEffect(() => {
+    console.log(news);
+  }, [news]);
 
   //   console.log(import.meta.env.VITE_NEWS_API_KEY);
 
@@ -102,7 +102,7 @@ function App() {
             <h3 className="text-white font-bold">Thought-provoking stories</h3>
             <div
               id="article-containers"
-              className="grid lg:grid-cols-4  md:grid-cols-3  gap-6 mt-7 "
+              className="grid [@media(min-width:1400px)]:grid-cols-4 [@media(min-width:1050px)]:grid-cols-3 sm:grid-cols-2 gap-6 mt-7 "
             >
               <div className=" w-75 h-65 flex flex-col items-center bg-gray-600/60 pb-4 rounded-3xl">
                 <img src={bgimage} className="w-75 h-45 rounded-t-3xl" alt="" />
