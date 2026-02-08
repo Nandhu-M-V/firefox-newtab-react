@@ -15,12 +15,25 @@ interface News {
   author?: string;
 }
 
+import { Switch } from './components/ui/switch';
 import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
+import { Button } from './components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from './components/ui/dropdown-menu';
 
 function App() {
   const [news, setnews] = useState<News[]>([]);
   const [scrolled, setscrolled] = useState<boolean>(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const [position, setPosition] = useState('bottom');
 
   //   const domain = getDomain(userInput);
 
@@ -228,14 +241,45 @@ function App() {
               </div>
               <hr className="w-[90%] mx-[5%] border-gray-500" />
               {/* Toggles */}
-              <div className="h-54 text-white bg-blue-200">
-                <div>
+              <div className="h-54 text-white">
+                <div className=" flex flex-col">
+                  <Switch className="absolute" id="shortcuts" />
                   <h2>Shortcuts</h2>
-                  <p>Sites you save or visit</p>
+                  <p className="text-sm text-gray-300">
+                    Sites you save or visit
+                  </p>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button className="bg-[#42414D] border border-gray-500">
+                        Opennnnnnn
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-20">
+                      <DropdownMenuGroup className="bg-[#42414D] ">
+                        <DropdownMenuRadioGroup
+                          value={position}
+                          onValueChange={setPosition}
+                        >
+                          <DropdownMenuRadioItem value="1">
+                            1 Row
+                          </DropdownMenuRadioItem>
+                          <DropdownMenuRadioItem value="2">
+                            2 Row
+                          </DropdownMenuRadioItem>
+                          <DropdownMenuRadioItem value="3">
+                            3 Row
+                          </DropdownMenuRadioItem>
+                        </DropdownMenuRadioGroup>
+                      </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
                 <div>
-                  <h2></h2>
-                  <p></p>
+                  <Switch id="stories" />
+                  <h2>Recommended stories</h2>
+                  <p className="text-sm text-gray-300">
+                    Exceptional content curated by the Firefox family
+                  </p>
                 </div>
               </div>
               <hr className="w-[90%] mx-[5%] border-gray-500" />
