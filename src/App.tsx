@@ -72,8 +72,17 @@ function App() {
               className="bg-transparent text-white h-13 w-full outline-none"
               type="search"
               placeholder="Search with Google or enter address"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  window.location.href =
+                    'https://www.google.com/search?q=' +
+                    encodeURIComponent(e.currentTarget.value);
+                }
+              }}
             />
           </div>
+
+          {/* shortcut icons  */}
           <div
             id="shortcutscontainer"
             className="grid lg:grid-cols-8 md:grid-cols-6 sm:grid-cols-3 grid-cols-3 gap-14 mb-10 mt-10 "
@@ -133,11 +142,59 @@ function App() {
               </a>
             </SheetTrigger>
 
-            <SheetContent side="right" className=" w-110 bg-gray-700">
-              <div className="h-90 bg-amber-200"></div>
-              <hr />
-              <div className="h-54 bg-blue-200"></div>
-              <hr />
+            <SheetContent
+              side="right"
+              className=" w-110 bg-[#42414D] border-l-0"
+            >
+              <div className="h-90 text-white">
+                {/* wallpaper */}
+                <div className="pt-15">
+                  <div className="flex justify-between mx-10">
+                    <p>Wallpapers</p>
+                    <p>Reset to default</p>
+                  </div>
+                  <div className="grid grid-cols-3 grid-rows-3 p-4 text-sm">
+                    <div className="flex flex-col items-center">
+                      <div className="w-26 h-20 bg-amber-900 rounded-md"></div>
+                      <p>Name</p>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-26 h-20 bg-amber-800 rounded-md"></div>
+                      <p>Name</p>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-26 h-20 bg-amber-700 rounded-md"></div>
+                      <p>Name</p>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-26 h-20 bg-amber-600 rounded-md"></div>
+                      <p>Name</p>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-26 h-20 bg-amber-500 rounded-md"></div>
+                      <p>Name</p>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-26 h-20 bg-amber-400 rounded-md"></div>
+                      <p>Name</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr className="w-[90%] mx-[5%] border-gray-500" />
+              {/* Toggles */}
+              <div className="h-54 text-white bg-blue-200">
+                <div>
+                  <h2>Shortcuts</h2>
+                  <p>Sites you save or visit</p>
+                </div>
+                <div>
+                  <h2></h2>
+                  <p></p>
+                </div>
+              </div>
+              <hr className="w-[90%] mx-[5%] border-gray-500" />
+
               <div className=""></div>
             </SheetContent>
           </Sheet>
