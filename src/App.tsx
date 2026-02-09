@@ -244,7 +244,7 @@ function App() {
           </section>
           <Sheet>
             <SheetTrigger>
-              <a className=" p-2 fixed z-10 right-10 bottom-5 bg-[#42414D] hover:bg-gray-600 rounded-sm text-white">
+              <a className=" p-2 fixed z-10 right-10 bottom-5 bg-gray-600 hover:bg-gray-500 rounded-sm text-white">
                 <img src={pen} alt="edit" />
               </a>
             </SheetTrigger>
