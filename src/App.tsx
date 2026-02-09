@@ -90,28 +90,6 @@ function App() {
     return () => el?.removeEventListener('scroll', handleScroll);
   }, []);
 
-  //    api fetching
-  //   useEffect(() => {
-  //     const fetchNews = async () => {
-  //       try {
-  //         const response = await axios.get(
-  //           'https://newsapi.org/v2/top-headlines',
-  //           {
-  //             params: {
-  //               country: 'us',
-  //               apiKey: import.meta.env.VITE_NEWS_API_KEY,
-  //             },
-  //           }
-  //         );
-  //         setnews(response.data.articles);
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     };
-  //     fetchNews();
-  //   }, []);
-
-  //   printing api
   //   useEffect(() => {
   //     console.log(news);
   //   }, [news]);
@@ -134,18 +112,8 @@ function App() {
             <span className="text-3xl font-bold">Firefox</span>
           </div>
 
-          {/* search bar */}
-          {/* https://www.google.com/search?client=firefox-b-d&q=hello+world */}
-          <div
-            className={`fixed w-screen h-25 top-0 bg-[#42414D]/70 border-b border-b-gray-500 ${scrolled ? 'block' : 'hidden'}`}
-          ></div>
-          <div
-            id="search-holder"
-            className={`w-full max-w-180 mt-4 flex items-center bg-[#42414D] rounded-md px-3
-            ${scrolled ? 'sticky -top-3.5 z-50' : ''}`}
-          >
-            <img src={googleLogo} alt="Google" className="w-5 h-5 mr-3" />
-
+          <div id="search-holder" className=" w-full max-w-150 mt-4">
+            <button>{/* <img src="" alt="" /> */} </button>
             <input
               className="bg-transparent text-white h-13 w-full outline-none"
               type="search"
@@ -165,20 +133,30 @@ function App() {
             id="shortcutscontainer"
             className="grid lg:grid-cols-8 md:grid-cols-6 sm:grid-cols-3 grid-cols-3 mb-4 mt-16 "
           >
-            {shortcuts.map((i) => (
-              <div
-                key={i.name}
-                onClick={() => {
-                  window.location.href = `${i.url}`;
-                }}
-                className="hover:bg-white/20 cursor-pointer bg-none rounded-xl w-28 pb-3 h-30 flex flex-col justify-center items-center"
-              >
-                <div className="bg-[#42414D]/80 flex flex-col justify-center items-center  text-white w-16 h-16 rounded-2xl">
-                  <img className="w-9 rounded-md " src={i.logo} alt="logo" />
-                </div>
-                <p className="text-center text-white">{i.name}</p>
-              </div>
-            ))}
+            <div className="bg-gray-600 opacity-80 text-white w-16 h-16 rounded-2xl">
+              {/* <img src="" alt="" /> */}
+            </div>
+            <div className="bg-gray-600 w-16 h-16 text-white rounded-2xl">
+              {/* <img src="" alt="" /> */}
+            </div>
+            <div className="bg-gray-600 w-16 h-16 text-white rounded-2xl">
+              {/* <img src="" alt="" /> */}
+            </div>
+            <div className="bg-gray-600 w-16 h-16 text-white rounded-2xl">
+              {/* <img src="" alt="" /> */}
+            </div>
+            <div className="bg-gray-600 w-16 h-16 text-white rounded-2xl">
+              {/* <img src="" alt="" /> */}
+            </div>
+            <div className="bg-gray-600 w-16 h-16 text-white rounded-2xl">
+              {/* <img src="" alt="" /> */}
+            </div>
+            <div className="bg-gray-600 w-16 h-16 text-white rounded-2xl">
+              {/* <img src="" alt="" /> */}
+            </div>
+            <div className="bg-gray-600 w-16 h-16 text-white rounded-2xl">
+              {/* <img src="" alt="" /> */}
+            </div>
           </div>
 
           {/* news section */}
@@ -219,7 +197,7 @@ function App() {
           </section>
           <Sheet>
             <SheetTrigger>
-              <a className=" p-2 fixed z-10 right-10 bottom-5 bg-[#42414D] hover:bg-gray-600 rounded-sm text-white">
+              <a className=" p-2 fixed z-10 right-10 bottom-5 bg-gray-600 hover:bg-gray-500 rounded-sm text-white">
                 <img src={pen} alt="edit" />
               </a>
             </SheetTrigger>
