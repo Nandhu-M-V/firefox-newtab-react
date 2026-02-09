@@ -22,22 +22,47 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
-  DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from './components/ui/dropdown-menu';
+
+type Shortcut = {
+  logo: string;
+  name: string;
+  url: string;
+};
 
 function App() {
   const [news, setnews] = useState<News[]>([]);
   const [scrolled, setscrolled] = useState<boolean>(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  const [shortcuts, setShortcuts] = useState<Shortcut[]>([
+    {
+      name: 'GitHub',
+      url: 'https://github.com',
+      logo: 'https://www.google.com/s2/favicons?sz=64&domain=github.com',
+    },
+    {
+      name: 'YouTube',
+      url: 'https://youtube.com',
+      logo: 'https://www.google.com/s2/favicons?sz=64&domain=youtube.com',
+    },
+    {
+      name: 'Twitter',
+      url: 'https://twitter.com',
+      logo: 'https://www.google.com/s2/favicons?sz=64&domain=twitter.com',
+    },
+  ]);
+
+  //   console.log(shortcuts);
+
   const [position, setPosition] = useState('bottom');
 
   //   const domain = getDomain(userInput);
 
-  //   domain for shortcuts
+  //   domain and img of shortcuts
 
   //     function getDomain(url: string) {
   //       try {
@@ -87,9 +112,9 @@ function App() {
   //   }, []);
 
   //   printing api
-  useEffect(() => {
-    console.log(news);
-  }, [news]);
+  //   useEffect(() => {
+  //     console.log(news);
+  //   }, [news]);
 
   //   console.log(import.meta.env.VITE_NEWS_API_KEY);
 
@@ -138,26 +163,22 @@ function App() {
           {/* shortcut icons  */}
           <div
             id="shortcutscontainer"
-            className="grid lg:grid-cols-8 md:grid-cols-6 sm:grid-cols-3 grid-cols-3 gap-14 mb-10 mt-10 "
+            className="grid lg:grid-cols-8 md:grid-cols-6 sm:grid-cols-3 grid-cols-3 mb-4 mt-16 "
           >
-            <div className="bg-[#42414D] opacity-80 text-white w-16 h-16 rounded-2xl">
-              {/* <img src="" alt="" /> */}
-            </div>
-            <div className="bg-gray-600 opacity-80 text-white w-16 h-16 rounded-2xl">
-              {/* <img src="" alt="" /> */}
-            </div>
-            <div className="bg-gray-600 opacity-80 text-white w-16 h-16 rounded-2xl">
-              {/* <img src="" alt="" /> */}
-            </div>
-            <div className="bg-gray-600 opacity-80 text-white w-16 h-16 rounded-2xl">
-              {/* <img src="" alt="" /> */}
-            </div>
-            <div className="bg-gray-600 opacity-80 text-white w-16 h-16 rounded-2xl">
-              {/* <img src="" alt="" /> */}
-            </div>
-            <div className="bg-gray-600 opacity-80 text-white w-16 h-16 rounded-2xl">
-              {/* <img src="" alt="" /> */}
-            </div>
+            {shortcuts.map((i) => (
+              <div
+                key={i.name}
+                onClick={() => {
+                  window.location.href = `${i.url}`;
+                }}
+                className="hover:bg-white/20 cursor-pointer bg-none rounded-xl w-28 pb-3 h-30 flex flex-col justify-center items-center"
+              >
+                <div className="bg-[#42414D]/80 flex flex-col justify-center items-center  text-white w-16 h-16 rounded-2xl">
+                  <img className="w-9 rounded-md " src={i.logo} alt="logo" />
+                </div>
+                <p className="text-center text-white">{i.name}</p>
+              </div>
+            ))}
           </div>
 
           {/* news section */}
@@ -173,14 +194,17 @@ function App() {
                   i.urlToImage && (
                     <div
                       key={index}
-                      className=" w-75 h-70 flex flex-col overflow-hidden items-center bg-[#42414D]/60 pb-4 rounded-3xl"
+                      onClick={() => {
+                        window.location.href = `${i.url}`;
+                      }}
+                      className=" w-75 h-70 flex flex-col hover:shadow-lg hover:bg-[#42414D] text-white hover:text-[#08bfcc] overflow-hidden cursor-pointer items-center bg-[#42414D]/70 pb-4 rounded-3xl"
                     >
                       <img
                         src={i.urlToImage}
                         className="w-75 h-45 rounded-t-3xl"
                         alt=""
                       />
-                      <p className="w-60 text-[14px] font-semibold text-white">
+                      <p className="w-60 text-[14px] font-semibold ">
                         {i.title}
                       </p>
                       <p className="relative w-40 right-14 top-3 text-white font-extralight text-sm">
