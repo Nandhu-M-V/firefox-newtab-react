@@ -1,8 +1,11 @@
 import bgimage from './assets/images/bg1.jpg';
+import bgimagesky from './assets/images/Sky.jpg';
 import firefoxLogo from './assets/images/FF.png';
 import pen from './assets/images/editpen.png';
 import googleLogo from './assets/images/search.png';
 import './App.css';
+
+import AddShortcuts from './components/customcomponents/AddShortcuts';
 
 import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
@@ -91,7 +94,7 @@ function App() {
     const el = scrollRef.current;
 
     const handleScroll = () => {
-      if (el && el.scrollTop > 0) {
+      if (el && el.scrollTop > 20) {
         setscrolled(true);
       } else {
         setscrolled(false);
@@ -104,27 +107,27 @@ function App() {
   }, []);
 
   //  api fetching
-  useEffect(() => {
-    if (!showStories) return;
+  //   useEffect(() => {
+  //     if (!showStories) return;
 
-    const fetchNews = async () => {
-      try {
-        const response = await axios.get(
-          'https://newsapi.org/v2/top-headlines',
-          {
-            params: {
-              country: 'us',
-              apiKey: import.meta.env.VITE_NEWS_API_KEY,
-            },
-          }
-        );
-        setnews(response.data.articles);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchNews();
-  }, [showStories]);
+  //     const fetchNews = async () => {
+  //       try {
+  //         const response = await axios.get(
+  //           'https://newsapi.org/v2/top-headlines',
+  //           {
+  //             params: {
+  //               country: 'us',
+  //               apiKey: import.meta.env.VITE_NEWS_API_KEY,
+  //             },
+  //           }
+  //         );
+  //         setnews(response.data.articles);
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     };
+  //     fetchNews();
+  //   }, [showStories]);
 
   //   printing api
   //   useEffect(() => {
@@ -134,7 +137,7 @@ function App() {
   //   console.log(import.meta.env.VITE_NEWS_API_KEY);
 
   return (
-    <div id="fullcontainer" className="overflow-hidden">
+    <div id="fullcontainer" className=" overflow-hidden">
       <div
         ref={scrollRef}
         className="w-full h-full overflow-scroll bg-cover bg-center fixed flex justify-center p-10"
@@ -192,18 +195,27 @@ function App() {
                   }}
                   className="hover:bg-white/20 cursor-pointer bg-none rounded-xl w-28 pb-3 h-30 flex flex-col justify-center items-center"
                 >
-                  <div className="bg-[#42414D]/80 flex flex-col justify-center items-center  text-white w-16 h-16 rounded-2xl">
+                  <div className="bg-[#42414D]/80 shadow-gray-900 shadow-sm flex flex-col justify-center items-center  text-white w-16 h-16 rounded-2xl">
                     <img className="w-9 rounded-md " src={i.logo} alt="logo" />
                   </div>
                   <p className="text-center text-white">{i.name}</p>
                 </div>
               ))}
+
+              <div className="hover:bg-white/20 opacity-50 hover:opacity-100 cursor-pointer bg-none rounded-xl w-28 pb-3 h-30 flex flex-col justify-center items-center">
+                <div className="bg-[#42414D]/80 flex flex-col shadow-gray-900 shadow-sm justify-center items-center text-white w-16 h-16 rounded-2xl">
+                  <span className="material-symbols-outlined">add</span>
+                </div>
+                <p className="text-center text-white">{`Add Shortcuts`}</p>
+              </div>
             </div>
           )}
 
-          {/* news section */}
+          {/* news grid section */}
 
           <section id="articlesection" className="">
+            <AddShortcuts />
+
             {showStories && (
               <h3 className="text-white font-bold">
                 Thought-provoking stories
@@ -222,7 +234,7 @@ function App() {
                         onClick={() => {
                           window.location.href = `${i.url}`;
                         }}
-                        className=" w-75 h-72 flex flex-col hover:shadow-lg hover:bg-[#42414D] text-white hover:text-[#08bfcc] overflow-hidden cursor-pointer items-center bg-[#42414D]/70 pb-4 rounded-3xl"
+                        className=" w-75 h-72 flex flex-col shadow-black hover:shadow-lg hover:bg-[#42414D] text-white hover:text-[#08bfcc] overflow-hidden cursor-pointer items-center bg-[#42414D]/70 pb-4 rounded-3xl"
                       >
                         <img
                           src={i.urlToImage}
@@ -251,27 +263,37 @@ function App() {
 
             <SheetContent
               side="right"
-              className=" w-115 bg-[#42414D] border-l-0"
+              className=" w-110 bg-[#42414D] border-l-0"
             >
               <div className="h-90 text-white">
                 {/* wallpaper */}
-                <div className="pt-15 mr-10">
+                <div className="pt-20 mr-0 cursor-default ">
                   <div className="flex justify-between mx-10">
                     <p>Wallpapers</p>
-                    <p className="text-sm">Reset to default</p>
+                    <p className="text-sm underline hover:no-underline cursor-pointer">
+                      Reset to default
+                    </p>
                   </div>
-                  <div className="grid grid-cols-3 grid-rows-3 gap-y-10 p-4 text-sm ">
+                  <div className="grid grid-cols-3 grid-rows-3 gap-y-10 p-4 text-[13px] ">
                     <div className="flex flex-col items-center gap-y-0.5">
-                      <div className="w-26 h-20 bg-amber-900 rounded-md "></div>
-                      <p>Name</p>
+                      <img
+                        src={bgimage}
+                        alt="bg"
+                        className="w-26 h-20 border-3 hover:brightness-75 cursor-pointer border-blue-400 rounded-md "
+                      />
+                      <p>Abstract</p>
                     </div>
                     <div className="flex flex-col items-center gap-y-0.5">
-                      <div className="w-26 h-20 bg-amber-800 rounded-md"></div>
-                      <p>Name</p>
+                      <div className="w-26 h-20 bg-blue-400 rounded-md hover:brightness-75 cursor-pointer"></div>
+                      <p>Solid colors</p>
                     </div>
                     <div className="flex flex-col items-center gap-y-0.5">
-                      <div className="w-26 h-20 bg-amber-700 rounded-md"></div>
-                      <p>Name</p>
+                      <img
+                        src={bgimagesky}
+                        alt="bg"
+                        className="w-26 h-20 rounded-md hover:brightness-75 cursor-pointer"
+                      />
+                      <p>Photographs</p>
                     </div>
                     <div className="flex flex-col items-center gap-y-0.5">
                       <div className="w-26 h-20 bg-amber-600 rounded-md"></div>
@@ -282,7 +304,9 @@ function App() {
                       <p>Name</p>
                     </div>
                     <div className="flex flex-col items-center gap-y-0.5">
-                      <div className="w-26 h-20  rounded-md border-2 border-dashed"></div>
+                      <div className="w-26 h-20 flex justify-center hover:brightness-75 cursor-pointer items-center rounded-md border-2 border-dashed">
+                        <span className=" material-symbols-outlined">add</span>
+                      </div>
                       <p>Upload an Image</p>
                     </div>
                   </div>
@@ -290,10 +314,10 @@ function App() {
               </div>
               <hr className="w-[90%] mx-[5%] border-gray-500" />
               {/* Toggles */}
-              <div className="h-54 text-white">
-                <div className="pl-20 pt-4">
+              <div className="h-54 cursor-default text-white">
+                <div className="pl-20 cursor-default pt-4">
                   <Switch
-                    className="absolute left-7 "
+                    className="absolute left-7 cursor-pointer "
                     id="shortcuts"
                     checked={showShorts}
                     onCheckedChange={setshowShorts}
@@ -304,7 +328,7 @@ function App() {
                   </p>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button className="bg-[#42414D] rounded-sm border border-gray-500">
+                      <Button className="bg-[#42414D] rounded-sm border cursor-pointer border-gray-500">
                         <p className="text-xs text-gray-300">Number of rows</p>
                       </Button>
                     </DropdownMenuTrigger>
@@ -330,7 +354,7 @@ function App() {
                 </div>
                 <div className="pl-20 pt-4">
                   <Switch
-                    className="absolute left-7 "
+                    className="absolute left-7 cursor-pointer"
                     id="stories"
                     checked={showStories}
                     onCheckedChange={setshowStories}
