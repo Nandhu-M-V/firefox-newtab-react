@@ -17,6 +17,7 @@ type Props = {
 export default function AddShortcuts({ onAddShortcut }: Props) {
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
+  const [open, setOpen] = useState(false);
 
   const handleSubmit = () => {
     if (!name || !url) return;
@@ -25,10 +26,16 @@ export default function AddShortcuts({ onAddShortcut }: Props) {
 
     setName('');
     setUrl('');
+    setOpen(false);
+  };
+
+  const handleReset = () => {
+    setName('');
+    setUrl('');
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <div className="hover:bg-white/20 opacity-50 hover:opacity-100 cursor-pointer bg-none rounded-xl w-28 pb-3 h-30 flex flex-col justify-center items-center">
           <Button>
@@ -49,6 +56,7 @@ export default function AddShortcuts({ onAddShortcut }: Props) {
           <Field>
             <FieldLabel className="text-white">Title</FieldLabel>
             <Input
+              className="text-white"
               placeholder="Enter a Title"
               type="text"
               value={name}
@@ -59,6 +67,7 @@ export default function AddShortcuts({ onAddShortcut }: Props) {
           <Field>
             <FieldLabel className="text-white">URL</FieldLabel>
             <Input
+              className="text-white"
               type="url"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
@@ -73,6 +82,7 @@ export default function AddShortcuts({ onAddShortcut }: Props) {
               className="px-3 py-1 rounded-sm hover:bg-gray-600 cursor-pointer "
               variant="outline"
               type="reset"
+              onClick={handleReset}
             >
               Reset
             </Button>
