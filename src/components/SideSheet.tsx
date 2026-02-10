@@ -31,7 +31,7 @@ type SideSheetProps = {
   setShowShorts: (v: boolean) => void;
   rows: '1' | '2' | '3';
   setRows: (v: '1' | '2' | '3') => void;
-  //   setBackground: (img: string) => void;
+  setBackground: (img: string) => void;
 };
 
 function SideSheet({
@@ -41,7 +41,7 @@ function SideSheet({
   setShowShorts,
   rows,
   setRows,
-  //   setBackground,
+  setBackground,
 }: SideSheetProps) {
   const handleRowsChange = (value: string) => {
     if (value === '1' || value === '2' || value === '3') {
@@ -66,7 +66,10 @@ function SideSheet({
             <div className="pt-20 mr-0 cursor-default ">
               <div className="flex justify-between mx-10">
                 <p>Wallpapers</p>
-                <p className="text-sm underline hover:no-underline cursor-pointer">
+                <p
+                  className="text-sm underline hover:no-underline cursor-pointer"
+                  onClick={() => setBackground('')}
+                >
                   Reset to default
                 </p>
               </div>
@@ -74,18 +77,23 @@ function SideSheet({
                 <div className="flex flex-col items-center gap-y-0.5">
                   <img
                     src={bgimage}
+                    onClick={() => setBackground(bgimage)}
                     alt="bg"
                     className="w-26 h-20 border-3 hover:brightness-75 cursor-pointer border-blue-400 rounded-md "
                   />
                   <p>Abstract</p>
                 </div>
                 <div className="flex flex-col items-center gap-y-0.5">
-                  <div className="w-26 h-20 bg-blue-400 rounded-md hover:brightness-75 cursor-pointer"></div>
+                  <div
+                    className="w-26 h-20 bg-gray-600 rounded-md hover:brightness-75 cursor-pointer"
+                    onClick={() => setBackground('')}
+                  ></div>
                   <p>Solid colors</p>
                 </div>
                 <div className="flex flex-col items-center gap-y-0.5">
                   <img
                     src={bgimagesky}
+                    onClick={() => setBackground(bgimagesky)}
                     alt="bg"
                     className="w-26 h-20 rounded-md hover:brightness-75 cursor-pointer"
                   />
@@ -94,6 +102,7 @@ function SideSheet({
                 <div className="flex flex-col items-center gap-y-0.5">
                   <img
                     src={bgcity}
+                    onClick={() => setBackground(bgcity)}
                     alt="CityScapes"
                     className="w-26 h-20 rounded-md hover:brightness-75 cursor-pointer"
                   />
@@ -102,6 +111,7 @@ function SideSheet({
                 <div className="flex flex-col items-center gap-y-0.5">
                   <img
                     src={bgspace}
+                    onClick={() => setBackground(bgspace)}
                     alt="Space"
                     className="w-26 h-20 rounded-md hover:brightness-75 cursor-pointer"
                   />
