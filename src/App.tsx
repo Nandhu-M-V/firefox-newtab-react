@@ -28,13 +28,17 @@ type Shortcut = {
 
 function App() {
   const [news, setnews] = useState<News[]>([]);
+
+  const [filtredNews, setFilterNews] = useState<News[]>([]);
+
+  const [filter, setFilter] = useState<string>('');
+
   const [scrolled, setscrolled] = useState<boolean>(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-
+  const [background, setBackground] = useState(bgimage);
   const [showStories, setShowStories] = useState(true);
   const [showShorts, setShowShorts] = useState(true);
   const [rows, setRows] = useState<'1' | '2' | '3'>('1');
-  //   const [background, setBackground] = useState<string>(bgimage);
 
   const [shortcuts, setShortcuts] = useState<Shortcut[]>([
     {
@@ -128,14 +132,14 @@ function App() {
       <div
         ref={scrollRef}
         className="w-full h-full overflow-scroll bg-cover bg-center fixed flex justify-center p-10"
-        style={{ backgroundImage: `url(${bgimage})` }}
+        style={{ backgroundImage: `url(${background})` }}
       >
         <main
-          className={` w-full max-w-7xl h-full flex flex-col  items-center  ${showStories ? '' : 'justify-center'} `}
+          className={`w-full max-w-7xl h-full flex flex-col items-center ${showStories ? '' : 'justify-center'} `}
         >
           <div
             id="logo-firefox"
-            className={` text-white z-8 flex items-center gap-3 left-12 ${scrolled ? 'hidden' : 'block'} ${showStories ? 'absolute' : ''}`}
+            className={`text-white z-8 flex items-center gap-3 left-12 ${scrolled ? 'hidden' : 'block'} ${showStories ? 'absolute' : ''}`}
           >
             <img src={firefoxLogo} alt="Firefox logo" className="w-14 h-14" />
             <span className="text-3xl font-bold hidden [@media(min-width:1170px)]:block cursor-default">
@@ -150,7 +154,7 @@ function App() {
           <div
             id="search-holder"
             className={` [@media(min-width:1000px)]:w-full sm:w-100 z-10  max-w-180 mt-4 flex items-center bg-[#42414D] rounded-md px-3
-            ${scrolled ? 'sticky -top-3.5 z-50' : ''}`}
+            ${scrolled ? 'fixed top-0 z-50' : ''}`}
           >
             <img src={googleLogo} alt="Google" className="w-5 h-5 mr-3" />
 
@@ -158,11 +162,15 @@ function App() {
               className="bg-transparent text-white h-13 w-full outline-none"
               type="search"
               placeholder="Search with Google or enter address"
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                  window.location.href =
-                    'https://www.google.com/search?q=' +
-                    encodeURIComponent(e.currentTarget.value);
+                  const result = news.filter((n) =>
+                    n.title.toLowerCase().includes(filter.toLowerCase())
+                  );
+                  setFilterNews(result);
+                  //   console.log(result);
                 }
               }}
             />
@@ -178,7 +186,7 @@ function App() {
                 <div
                   key={i.name}
                   onClick={() => {
-                    window.location.href = `${i.url}`;
+                    window.open(i.url, '_blank');
                   }}
                   className="hover:bg-white/20 cursor-pointer bg-none rounded-xl w-28 pb-3 h-30 flex flex-col justify-center items-center"
                 >
@@ -205,30 +213,55 @@ function App() {
               className="grid [@media(min-width:1400px)]:grid-cols-4 [@media(min-width:1050px)]:grid-cols-3 sm:grid-cols-2 gap-6 mt-7 "
             >
               {showStories &&
-                news.map(
-                  (i, index) =>
-                    i.urlToImage && (
-                      <div
-                        key={index}
-                        onClick={() => {
-                          window.location.href = `${i.url}`;
-                        }}
-                        className=" w-75 h-72 flex flex-col shadow-black hover:shadow-xl hover:bg-[#42414D] text-white hover:text-[#08bfcc] overflow-hidden cursor-pointer items-center bg-[#42414D]/70 pb-4 rounded-3xl"
-                      >
-                        <img
-                          src={i.urlToImage}
-                          className="w-75 h-45 rounded-t-3xl"
-                          alt=""
-                        />
-                        <p className="w-60 pt-2 text-[14px] font-semibold ">
-                          {i.title}
-                        </p>
-                        <p className="relative w-40 right-14 top-3 text-white font-extralight text-sm">
-                          {i.author?.includes('https') ? '' : i.author}
-                        </p>
-                      </div>
+                (filtredNews.length > 0
+                  ? filtredNews.map(
+                      (i, index) =>
+                        i.urlToImage && (
+                          <div
+                            key={index}
+                            onClick={() => {
+                              window.open(i.url, '_blank');
+                            }}
+                            className=" w-75 h-72 flex flex-col shadow-black hover:shadow-xl hover:bg-[#42414D] text-white hover:text-[#08bfcc] overflow-hidden cursor-pointer items-center bg-[#42414D]/70 pb-4 rounded-3xl"
+                          >
+                            <img
+                              src={i.urlToImage}
+                              className="w-75 h-45 rounded-t-3xl"
+                              alt=""
+                            />
+                            <p className="w-60 pt-2 text-[14px] font-semibold ">
+                              {i.title.slice(0, 60) + '...'}
+                            </p>
+                            <p className="relative w-40 right-12 top-4 text-gray-300 font-light text-sm">
+                              {i.author?.includes('https') ? '' : i.author}
+                            </p>
+                          </div>
+                        )
                     )
-                )}
+                  : news.map(
+                      (i, index) =>
+                        i.urlToImage && (
+                          <div
+                            key={index}
+                            onClick={() => {
+                              window.open(i.url, '_blank');
+                            }}
+                            className=" w-75 h-72 flex flex-col shadow-black hover:shadow-xl hover:bg-[#42414D] text-white hover:text-[#08bfcc] overflow-hidden cursor-pointer items-center bg-[#42414D]/70 pb-4 rounded-3xl"
+                          >
+                            <img
+                              src={i.urlToImage}
+                              className="w-75 h-45 rounded-t-3xl"
+                              alt=""
+                            />
+                            <p className="w-60 pt-2 text-[14px] font-semibold ">
+                              {i.title.slice(0, 60) + '...'}
+                            </p>
+                            <p className="relative w-40 right-12 top-4 text-gray-300 font-light text-sm">
+                              {i.author?.includes('https') ? '' : i.author}
+                            </p>
+                          </div>
+                        )
+                    ))}
             </div>
 
             {/* sidebar */}
@@ -240,7 +273,8 @@ function App() {
             setShowShorts={setShowShorts}
             rows={rows}
             setRows={setRows}
-            // setBackground={setBackground}
+            setBackground={setBackground}
+            background={background}
           />
         </main>
       </div>
