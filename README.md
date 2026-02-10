@@ -32,8 +32,8 @@ This project recreates the core experience of Firefox’s New Tab page with adde
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/firefox-newtab-clone.git
-cd firefox-newtab-clone
+git clone https://github.com/your-username/firefox-newtab-react.git
+cd firefox-newtab-react
 ```
 
 ### Install Dependencies
