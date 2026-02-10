@@ -92,6 +92,18 @@ src/
 - NewsAPI
 - shadcn/ui components
 
+---
+
+## Screenshots
+
+### Home Page
+![Home Page](./screenshots/home.png)
+
+### News & Stories
+![News](./screenshots/stories.png)
+
+### Settings / Customization Panel
+![Settings](./screenshots/sidepanel.png)
 
 
 
