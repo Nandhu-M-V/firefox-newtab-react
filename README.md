@@ -103,7 +103,7 @@ src/
 ![News](./screenshots/stories.png)
 
 ### Settings / Customization Panel
-![Settings](./screenshots/sidepanel.png)
+![Settings](./screenshots/Sidepanel.png)
 
 
 
