@@ -44,7 +44,52 @@ yarn install
 
 ### Environment Configuration
 
-#### Create a .env file in the project root:
+Create a .env file in the project root:
+
+```bash
+VITE_NEWS_API_KEY=your_news_api_key_here
+```
+Get your API key from:
+https://newsapi.org/
+
+### Run the Application
+
+```bash
+yarn dev
+```
+
+```bash
+src/
+├── assets/
+│   └── images/
+│       ├── bg1.jpg
+│       ├── city.jpg
+│       ├── space.jpg
+│       └── icons & logos
+│
+├── components/
+│   ├── SideSheet.tsx        # Settings sidebar
+│   ├── AddShortcuts.tsx    # Add shortcut dialog
+│   └── ui/                 # Reusable UI components
+│
+├── App.tsx                 # Main app logic
+├── App.css                 # Global styles
+├── main.tsx                # Entry point
+│
+├── index.css               # Tailwind base styles
+└── vite-env.d.ts
+
+```
+
+### Technologies Used
+
+- React + TypeScript
+- Vite
+- Tailwind CSS
+- Axios
+- NewsAPI
+- shadcn/ui components
+
 
 
 
