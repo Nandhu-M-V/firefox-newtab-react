@@ -1,13 +1,13 @@
-# Firefox New Tab Clone
+# Firefox New Tab React
 
-A Firefox-inspired **new tab homepage** built using **React, TypeScript, Vite, and Tailwind CSS**.  
+A Firefox-inspired **new tab homepage** built using **React, TypeScript, Vite, Tailwind CSS and Shadcn/ui**.  
 The app allows users to customize shortcuts, wallpapers, and view recommended news stories.
 
 ---
 
 ## Project Overview
 
-This project recreates the core experience of Firefox’s New Tab page with added customization features.
+This project recreates the core experience of Firefox’s New Tab page with customization features.
 
 ### Features
 - Google-style search bar
