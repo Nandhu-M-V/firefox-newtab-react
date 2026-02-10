@@ -1,11 +1,13 @@
 import bgimage from './assets/images/bg1.jpg';
-import bgimagesky from './assets/images/Sky.jpg';
+// import bgimagesky from './assets/images/Sky.jpg';
 import firefoxLogo from './assets/images/FF.png';
-import pen from './assets/images/editpen.png';
+// import pen from './assets/images/editpen.png';
 import googleLogo from './assets/images/search.png';
 import './App.css';
 
-import AddShortcuts from './components/customcomponents/AddShortcuts';
+import SideSheet from './components/SideSheet';
+
+import AddShortcuts from './components/AddShortcuts';
 
 import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
@@ -18,18 +20,6 @@ interface News {
   author?: string;
 }
 
-import { Switch } from './components/ui/switch';
-import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
-import { Button } from './components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuTrigger,
-} from './components/ui/dropdown-menu';
-
 type Shortcut = {
   logo: string;
   name: string;
@@ -41,8 +31,10 @@ function App() {
   const [scrolled, setscrolled] = useState<boolean>(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const [showStories, setshowStories] = useState(true);
-  const [showShorts, setshowShorts] = useState(true);
+  const [showStories, setShowStories] = useState(true);
+  const [showShorts, setShowShorts] = useState(true);
+  const [rows, setRows] = useState<'1' | '2' | '3'>('1');
+  //   const [background, setBackground] = useState<string>(bgimage);
 
   const [shortcuts, setShortcuts] = useState<Shortcut[]>([
     {
@@ -64,29 +56,24 @@ function App() {
 
   //   console.log(shortcuts);
 
-  // row numbers
+  //  function to add images to shortcuts
 
-  const [rows, setRows] = useState<'1' | '2' | '3'>('1');
+  const addshortcut = (name: string, url: string) => {
+    const domain = new URL(url).hostname;
 
-  const handleRowsChange = (value: string) => {
-    if (value === '1' || value === '2' || value === '3') {
-      setRows(value);
-    }
+    setShortcuts((prev) => [
+      ...prev,
+      {
+        name,
+        url,
+        logo: `https://www.google.com/s2/favicons?sz=64&domain=${domain}`,
+      },
+    ]);
   };
 
+  // row numbers for shortcuts ...
+
   //   console.log(rows);
-
-  //   const domain = getDomain(userInput);
-
-  //   domain and img of shortcuts
-
-  //     function getDomain(url: string) {
-  //       try {
-  //         return new URL(url).hostname;
-  //       } catch {
-  //         return url;
-  //       }
-  //     }
 
   //   checking scroll
 
@@ -107,32 +94,32 @@ function App() {
   }, []);
 
   //  api fetching
-  //   useEffect(() => {
-  //     if (!showStories) return;
+  useEffect(() => {
+    if (!showStories) return;
 
-  //     const fetchNews = async () => {
-  //       try {
-  //         const response = await axios.get(
-  //           'https://newsapi.org/v2/top-headlines',
-  //           {
-  //             params: {
-  //               country: 'us',
-  //               apiKey: import.meta.env.VITE_NEWS_API_KEY,
-  //             },
-  //           }
-  //         );
-  //         setnews(response.data.articles);
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     };
-  //     fetchNews();
-  //   }, [showStories]);
+    const fetchNews = async () => {
+      try {
+        const response = await axios.get(
+          'https://newsapi.org/v2/top-headlines',
+          {
+            params: {
+              country: 'us',
+              apiKey: import.meta.env.VITE_NEWS_API_KEY,
+            },
+          }
+        );
+        setnews(response.data.articles);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchNews();
+  }, [showStories]);
 
-  //   printing api
-  //   useEffect(() => {
-  //     console.log(news);
-  //   }, [news]);
+  // printing api
+  // useEffect(() => {
+  //   console.log(news);
+  // }, [news]);
 
   //   console.log(import.meta.env.VITE_NEWS_API_KEY);
 
@@ -151,7 +138,7 @@ function App() {
             className={` text-white z-8 flex items-center gap-3 left-12 ${scrolled ? 'hidden' : 'block'} ${showStories ? 'absolute' : ''}`}
           >
             <img src={firefoxLogo} alt="Firefox logo" className="w-14 h-14" />
-            <span className="text-3xl font-bold hidden [@media(min-width:1170px)]:block">
+            <span className="text-3xl font-bold hidden [@media(min-width:1170px)]:block cursor-default">
               Firefox
             </span>
           </div>
@@ -185,7 +172,7 @@ function App() {
           {showShorts && (
             <div
               id="shortcutscontainer"
-              className="grid lg:grid-cols-8 md:grid-cols-6 sm:grid-cols-3 grid-cols-3 mb-4 mt-16 "
+              className="grid lg:grid-cols-8 grid-flow-row md:grid-cols-6 sm:grid-cols-3 grid-cols-3 mb-4 mt-16 "
             >
               {shortcuts.map((i) => (
                 <div
@@ -201,21 +188,13 @@ function App() {
                   <p className="text-center text-white">{i.name}</p>
                 </div>
               ))}
-
-              <div className="hover:bg-white/20 opacity-50 hover:opacity-100 cursor-pointer bg-none rounded-xl w-28 pb-3 h-30 flex flex-col justify-center items-center">
-                <div className="bg-[#42414D]/80 flex flex-col shadow-gray-900 shadow-sm justify-center items-center text-white w-16 h-16 rounded-2xl">
-                  <span className="material-symbols-outlined">add</span>
-                </div>
-                <p className="text-center text-white">{`Add Shortcuts`}</p>
-              </div>
+              <AddShortcuts onAddShortcut={addshortcut} />
             </div>
           )}
 
           {/* news grid section */}
 
           <section id="articlesection" className="">
-            <AddShortcuts />
-
             {showStories && (
               <h3 className="text-white font-bold">
                 Thought-provoking stories
@@ -234,7 +213,7 @@ function App() {
                         onClick={() => {
                           window.location.href = `${i.url}`;
                         }}
-                        className=" w-75 h-72 flex flex-col shadow-black hover:shadow-lg hover:bg-[#42414D] text-white hover:text-[#08bfcc] overflow-hidden cursor-pointer items-center bg-[#42414D]/70 pb-4 rounded-3xl"
+                        className=" w-75 h-72 flex flex-col shadow-black hover:shadow-xl hover:bg-[#42414D] text-white hover:text-[#08bfcc] overflow-hidden cursor-pointer items-center bg-[#42414D]/70 pb-4 rounded-3xl"
                       >
                         <img
                           src={i.urlToImage}
@@ -254,130 +233,15 @@ function App() {
 
             {/* sidebar */}
           </section>
-          <Sheet>
-            <SheetTrigger>
-              <a className=" p-2 fixed z-10 right-10 bottom-5 bg-gray-600 hover:bg-gray-500 rounded-sm text-white">
-                <img src={pen} alt="edit" />
-              </a>
-            </SheetTrigger>
-
-            <SheetContent
-              side="right"
-              className=" w-110 bg-[#42414D] border-l-0"
-            >
-              <div className="h-90 text-white">
-                {/* wallpaper */}
-                <div className="pt-20 mr-0 cursor-default ">
-                  <div className="flex justify-between mx-10">
-                    <p>Wallpapers</p>
-                    <p className="text-sm underline hover:no-underline cursor-pointer">
-                      Reset to default
-                    </p>
-                  </div>
-                  <div className="grid grid-cols-3 grid-rows-3 gap-y-10 p-4 text-[13px] ">
-                    <div className="flex flex-col items-center gap-y-0.5">
-                      <img
-                        src={bgimage}
-                        alt="bg"
-                        className="w-26 h-20 border-3 hover:brightness-75 cursor-pointer border-blue-400 rounded-md "
-                      />
-                      <p>Abstract</p>
-                    </div>
-                    <div className="flex flex-col items-center gap-y-0.5">
-                      <div className="w-26 h-20 bg-blue-400 rounded-md hover:brightness-75 cursor-pointer"></div>
-                      <p>Solid colors</p>
-                    </div>
-                    <div className="flex flex-col items-center gap-y-0.5">
-                      <img
-                        src={bgimagesky}
-                        alt="bg"
-                        className="w-26 h-20 rounded-md hover:brightness-75 cursor-pointer"
-                      />
-                      <p>Photographs</p>
-                    </div>
-                    <div className="flex flex-col items-center gap-y-0.5">
-                      <div className="w-26 h-20 bg-amber-600 rounded-md"></div>
-                      <p>Name</p>
-                    </div>
-                    <div className="flex flex-col items-center gap-y-0.5">
-                      <div className="w-26 h-20 bg-amber-500 rounded-md"></div>
-                      <p>Name</p>
-                    </div>
-                    <div className="flex flex-col items-center gap-y-0.5">
-                      <div className="w-26 h-20 flex justify-center hover:brightness-75 cursor-pointer items-center rounded-md border-2 border-dashed">
-                        <span className=" material-symbols-outlined">add</span>
-                      </div>
-                      <p>Upload an Image</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <hr className="w-[90%] mx-[5%] border-gray-500" />
-              {/* Toggles */}
-              <div className="h-54 cursor-default text-white">
-                <div className="pl-20 cursor-default pt-4">
-                  <Switch
-                    className="absolute left-7 cursor-pointer "
-                    id="shortcuts"
-                    checked={showShorts}
-                    onCheckedChange={setshowShorts}
-                  />
-                  <h2>Shortcuts</h2>
-                  <p className="text-[13px] text-gray-300">
-                    Sites you save or visit
-                  </p>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button className="bg-[#42414D] rounded-sm border cursor-pointer border-gray-500">
-                        <p className="text-xs text-gray-300">Number of rows</p>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-20 bg-[#141414] border border-gray-500 text-white">
-                      <DropdownMenuGroup>
-                        <DropdownMenuRadioGroup
-                          value={rows}
-                          onValueChange={handleRowsChange}
-                        >
-                          <DropdownMenuRadioItem value="1">
-                            1 Row
-                          </DropdownMenuRadioItem>
-                          <DropdownMenuRadioItem value="2">
-                            2 Row
-                          </DropdownMenuRadioItem>
-                          <DropdownMenuRadioItem value="3">
-                            3 Row
-                          </DropdownMenuRadioItem>
-                        </DropdownMenuRadioGroup>
-                      </DropdownMenuGroup>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-                <div className="pl-20 pt-4">
-                  <Switch
-                    className="absolute left-7 cursor-pointer"
-                    id="stories"
-                    checked={showStories}
-                    onCheckedChange={setshowStories}
-                  />
-
-                  <h2>Recommended stories</h2>
-                  <p className="text-[13px] text-gray-300">
-                    Exceptional content curated by the Firefox family
-                  </p>
-                </div>
-              </div>
-              <hr className="w-[90%] mx-[5%] relative bottom-10 border-gray-500" />
-
-              <div className="">
-                <a
-                  className="relative left-14 bottom-6 text-[#08bfcc] underline text-[14px]"
-                  href=""
-                >
-                  Manage more settings
-                </a>
-              </div>
-            </SheetContent>
-          </Sheet>
+          <SideSheet
+            showStories={showStories}
+            setShowStories={setShowStories}
+            showShorts={showShorts}
+            setShowShorts={setShowShorts}
+            rows={rows}
+            setRows={setRows}
+            // setBackground={setBackground}
+          />
         </main>
       </div>
     </div>
