@@ -14,15 +14,15 @@ import {
   SheetTitle,
   SheetDescription,
 } from '@/components/ui/sheet';
-import { Button } from './ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuTrigger,
-} from './ui/dropdown-menu';
+// import { Button } from './ui/button';
+// import {
+//   DropdownMenu,
+//   DropdownMenuContent,
+//   DropdownMenuGroup,
+//   DropdownMenuRadioGroup,
+//   DropdownMenuRadioItem,
+//   DropdownMenuTrigger,
+// } from './ui/dropdown-menu';
 
 type SideSheetProps = {
   showStories: boolean;
@@ -32,6 +32,7 @@ type SideSheetProps = {
   rows: '1' | '2' | '3';
   setRows: (v: '1' | '2' | '3') => void;
   setBackground: (img: string) => void;
+  background: string;
 };
 
 function SideSheet({
@@ -39,15 +40,16 @@ function SideSheet({
   setShowStories,
   showShorts,
   setShowShorts,
-  rows,
-  setRows,
+  //   rows,
+  //   setRows,
   setBackground,
+  background,
 }: SideSheetProps) {
-  const handleRowsChange = (value: string) => {
-    if (value === '1' || value === '2' || value === '3') {
-      setRows(value);
-    }
-  };
+  //   const handleRowsChange = (value: string) => {
+  //     if (value === '1' || value === '2' || value === '3') {
+  //       setRows(value);
+  //     }
+  //   };
 
   return (
     <div>
@@ -79,23 +81,23 @@ function SideSheet({
                     src={bgimage}
                     onClick={() => setBackground(bgimage)}
                     alt="bg"
-                    className="w-26 h-20 border-3 hover:brightness-75 cursor-pointer border-blue-400 rounded-md "
+                    className={`w-26 h-20  hover:brightness-75 cursor-pointer rounded-md ${background === bgimage ? 'border-3 border-blue-400' : ''}`}
                   />
                   <p>Abstract</p>
                 </div>
                 <div className="flex flex-col items-center gap-y-0.5">
                   <div
-                    className="w-26 h-20 bg-gray-600 rounded-md hover:brightness-75 cursor-pointer"
+                    className={`w-26 h-20 bg-gray-600 rounded-md hover:brightness-75 cursor-pointer ${background === '' ? 'border-3 border-blue-400' : ''}`}
                     onClick={() => setBackground('')}
                   ></div>
-                  <p>Solid colors</p>
+                  <p>Solid color</p>
                 </div>
                 <div className="flex flex-col items-center gap-y-0.5">
                   <img
                     src={bgimagesky}
                     onClick={() => setBackground(bgimagesky)}
                     alt="bg"
-                    className="w-26 h-20 rounded-md hover:brightness-75 cursor-pointer"
+                    className={`w-26 h-20 rounded-md hover:brightness-75 cursor-pointer ${background === bgimagesky ? 'border-3 border-blue-400' : ''}`}
                   />
                   <p>Photographs</p>
                 </div>
@@ -104,7 +106,7 @@ function SideSheet({
                     src={bgcity}
                     onClick={() => setBackground(bgcity)}
                     alt="CityScapes"
-                    className="w-26 h-20 rounded-md hover:brightness-75 cursor-pointer"
+                    className={`w-26 h-20 rounded-md hover:brightness-75 cursor-pointer ${background === bgcity ? 'border-3 border-blue-400' : ''}`}
                   />
                   <p>Cityscapes</p>
                 </div>
@@ -113,7 +115,7 @@ function SideSheet({
                     src={bgspace}
                     onClick={() => setBackground(bgspace)}
                     alt="Space"
-                    className="w-26 h-20 rounded-md hover:brightness-75 cursor-pointer"
+                    className={`w-26 h-20 rounded-md hover:brightness-75 cursor-pointer ${background === bgspace ? 'border-3 border-blue-400' : ''}`}
                   />
                   <p>Space</p>
                 </div>
@@ -140,7 +142,7 @@ function SideSheet({
               <p className="text-[13px] text-gray-300">
                 Sites you save or visit
               </p>
-              <DropdownMenu>
+              {/* <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button className="bg-[#42414D] rounded-sm border cursor-pointer border-gray-500">
                     <p className="text-xs text-gray-300">Number of rows</p>
@@ -164,7 +166,7 @@ function SideSheet({
                     </DropdownMenuRadioGroup>
                   </DropdownMenuGroup>
                 </DropdownMenuContent>
-              </DropdownMenu>
+              </DropdownMenu> */}
             </div>
             <div className="pl-20 pt-4">
               <Switch
@@ -181,15 +183,6 @@ function SideSheet({
             </div>
           </div>
           <hr className="w-[90%] mx-[5%] relative bottom-10 border-gray-500" />
-
-          <div className="">
-            <a
-              className="relative left-14 bottom-6 text-[#08bfcc] underline text-[14px]"
-              href="about:preferences#home"
-            >
-              Manage more settings
-            </a>
-          </div>
         </SheetContent>
       </Sheet>
     </div>
