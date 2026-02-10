@@ -14,6 +14,7 @@ import {
   SheetTitle,
   SheetDescription,
 } from '@/components/ui/sheet';
+// import { useEffect, useState } from 'react';
 // import { Button } from './ui/button';
 // import {
 //   DropdownMenu,
@@ -50,6 +51,12 @@ function SideSheet({
   //       setRows(value);
   //     }
   //   };
+
+  //   const [customBg, setCustomBg] = useState<string>('');
+
+  //   useEffect(() => {
+  //     background = customBg;
+  //   }, [customBg]);
 
   return (
     <div>
@@ -121,6 +128,15 @@ function SideSheet({
                 </div>
                 <div className="flex flex-col items-center gap-y-0.5">
                   <div className="w-26 h-20 flex justify-center hover:brightness-75 cursor-pointer items-center rounded-md border-2 border-dashed">
+                    <input
+                      type="file"
+                      className="opacity-0"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        console.log(file?.name);
+                        // setCustomBg(`../assets/images/${file?.name}`);
+                      }}
+                    />
                     <span className=" material-symbols-outlined">add</span>
                   </div>
                   <p>Upload an Image</p>

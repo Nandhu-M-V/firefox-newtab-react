@@ -36,27 +36,48 @@ function App() {
   const [scrolled, setscrolled] = useState<boolean>(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [background, setBackground] = useState(bgimage);
-  const [showStories, setShowStories] = useState(true);
+  const [showStories, setShowStories] = useState(false);
   const [showShorts, setShowShorts] = useState(true);
   const [rows, setRows] = useState<'1' | '2' | '3'>('1');
 
-  const [shortcuts, setShortcuts] = useState<Shortcut[]>([
-    {
-      name: 'GitHub',
-      url: 'https://github.com',
-      logo: 'https://www.google.com/s2/favicons?sz=64&domain=github.com',
-    },
-    {
-      name: 'YouTube',
-      url: 'https://youtube.com',
-      logo: 'https://www.google.com/s2/favicons?sz=64&domain=youtube.com',
-    },
-    {
-      name: 'Twitter',
-      url: 'https://twitter.com',
-      logo: 'https://www.google.com/s2/favicons?sz=64&domain=twitter.com',
-    },
-  ]);
+  //loading Shortcuts
+
+  const [shortcuts, setShortcuts] = useState<Shortcut[]>(() => {
+    const saved = localStorage.getItem('shortcuts');
+    if (saved) {
+      return JSON.parse(saved);
+    }
+
+    return [
+      {
+        name: 'GitHub',
+        url: 'https://github.com',
+        logo: 'https://www.google.com/s2/favicons?sz=64&domain=github.com',
+      },
+      {
+        name: 'YouTube',
+        url: 'https://youtube.com',
+        logo: 'https://www.google.com/s2/favicons?sz=64&domain=youtube.com',
+      },
+      {
+        name: 'Twitter',
+        url: 'https://twitter.com',
+        logo: 'https://www.google.com/s2/favicons?sz=64&domain=twitter.com',
+      },
+    ];
+  });
+
+  //saving shortcuts
+
+  useEffect(() => {
+    localStorage.setItem('shortcuts', JSON.stringify(shortcuts));
+  }, [shortcuts]);
+
+  //removing shortcuts
+
+  const removeShortcut = (url: string) => {
+    setShortcuts((prev) => prev.filter((s) => s.url !== url));
+  };
 
   //   console.log(shortcuts);
 
@@ -183,17 +204,29 @@ function App() {
               className="grid lg:grid-cols-8 grid-flow-row md:grid-cols-6 sm:grid-cols-3 grid-cols-3 mb-4 mt-16 "
             >
               {shortcuts.map((i) => (
-                <div
-                  key={i.name}
-                  onClick={() => {
-                    window.open(i.url, '_blank');
-                  }}
-                  className="hover:bg-white/20 cursor-pointer bg-none rounded-xl w-28 pb-3 h-30 flex flex-col justify-center items-center"
-                >
-                  <div className="bg-[#42414D]/80 shadow-gray-900 shadow-sm flex flex-col justify-center items-center  text-white w-16 h-16 rounded-2xl">
-                    <img className="w-9 rounded-md " src={i.logo} alt="logo" />
+                <div>
+                  <button
+                    className="absolute flex text-white/60 justify-center items-center  p-1.5 font-bold hover:bg-gray-700/80 rounded-sm"
+                    onClick={() => removeShortcut(i.url)}
+                  >
+                    x
+                  </button>
+                  <div
+                    key={i.name}
+                    onClick={() => {
+                      window.open(i.url, '_blank');
+                    }}
+                    className="hover:bg-white/20 cursor-pointer bg-none rounded-xl w-28 pb-3 h-30 flex flex-col justify-center items-center"
+                  >
+                    <div className="bg-[#42414D]/80 shadow-gray-900 shadow-sm flex flex-col justify-center items-center  text-white w-16 h-16 rounded-2xl">
+                      <img
+                        className="w-9 rounded-md "
+                        src={i.logo}
+                        alt="logo"
+                      />
+                    </div>
+                    <p className="text-center text-white">{i.name}</p>
                   </div>
-                  <p className="text-center text-white">{i.name}</p>
                 </div>
               ))}
               <AddShortcuts onAddShortcut={addshortcut} />
