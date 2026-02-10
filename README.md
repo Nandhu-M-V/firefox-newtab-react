@@ -58,6 +58,8 @@ https://newsapi.org/
 yarn dev
 ```
 
+### Folder Structure
+
 ```bash
 src/
 ├── assets/
