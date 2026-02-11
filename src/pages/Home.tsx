@@ -1,14 +1,10 @@
-import bgimage from './assets/images/bg1.jpg';
-// import bgimagesky from './assets/images/Sky.jpg';
-import firefoxLogo from './assets/images/FF.png';
-// import pen from './assets/images/editpen.png';
-import googleLogo from './assets/images/search.png';
-import './App.css';
-
-import SideSheet from './components/SideSheet';
-
-import AddShortcuts from './components/AddShortcuts';
-
+import bgimage from '../assets/images/bg1.jpg';
+import firefoxLogo from '../assets/images/FF.png';
+import googleLogo from '../assets/images/search.png';
+import '../App.css';
+import SideSheet from '../components/SideSheet';
+import AddShortcuts from '../components/AddShortcuts';
+import NewsGrid from '@/components/Newsgrid';
 import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 
@@ -26,7 +22,7 @@ type Shortcut = {
   url: string;
 };
 
-function App() {
+function Home() {
   const [news, setnews] = useState<News[]>([]);
 
   const [filtredNews, setFilterNews] = useState<News[]>([]);
@@ -44,27 +40,7 @@ function App() {
 
   const [shortcuts, setShortcuts] = useState<Shortcut[]>(() => {
     const saved = localStorage.getItem('shortcuts');
-    if (saved) {
-      return JSON.parse(saved);
-    }
-
-    return [
-      {
-        name: 'GitHub',
-        url: 'https://github.com',
-        logo: 'https://www.google.com/s2/favicons?sz=64&domain=github.com',
-      },
-      {
-        name: 'YouTube',
-        url: 'https://youtube.com',
-        logo: 'https://www.google.com/s2/favicons?sz=64&domain=youtube.com',
-      },
-      {
-        name: 'Twitter',
-        url: 'https://twitter.com',
-        logo: 'https://www.google.com/s2/favicons?sz=64&domain=twitter.com',
-      },
-    ];
+    return saved ? (JSON.parse(saved) as Shortcut[]) : [];
   });
 
   //saving shortcuts
@@ -236,70 +212,13 @@ function App() {
 
           {/* news grid section */}
 
-          <section id="articlesection" className="">
-            {showStories && (
-              <h3 className="text-white font-bold">
-                Thought-provoking stories
-              </h3>
-            )}
-            <div
-              id="article-containers"
-              className="grid [@media(min-width:1400px)]:grid-cols-4 [@media(min-width:1050px)]:grid-cols-3 sm:grid-cols-2 gap-6 mt-7 "
-            >
-              {showStories &&
-                (filtredNews.length > 0
-                  ? filtredNews.map(
-                      (i, index) =>
-                        i.urlToImage && (
-                          <div
-                            key={index}
-                            onClick={() => {
-                              window.open(i.url, '_blank');
-                            }}
-                            className=" w-75 h-72 flex flex-col shadow-black hover:shadow-xl hover:bg-[#42414D] text-white hover:text-[#08bfcc] overflow-hidden cursor-pointer items-center bg-[#42414D]/70 pb-4 rounded-3xl"
-                          >
-                            <img
-                              src={i.urlToImage}
-                              className="w-75 h-45 rounded-t-3xl"
-                              alt=""
-                            />
-                            <p className="w-60 pt-2 text-[14px] font-semibold ">
-                              {i.title.slice(0, 60) + '...'}
-                            </p>
-                            <p className="relative w-40 right-12 top-4 text-gray-300 font-light text-sm">
-                              {i.author?.includes('https') ? '' : i.author}
-                            </p>
-                          </div>
-                        )
-                    )
-                  : news.map(
-                      (i, index) =>
-                        i.urlToImage && (
-                          <div
-                            key={index}
-                            onClick={() => {
-                              window.open(i.url, '_blank');
-                            }}
-                            className=" w-75 h-72 flex flex-col shadow-black hover:shadow-xl hover:bg-[#42414D] text-white hover:text-[#08bfcc] overflow-hidden cursor-pointer items-center bg-[#42414D]/70 pb-4 rounded-3xl"
-                          >
-                            <img
-                              src={i.urlToImage}
-                              className="w-75 h-45 rounded-t-3xl"
-                              alt=""
-                            />
-                            <p className="w-60 pt-2 text-[14px] font-semibold ">
-                              {i.title.slice(0, 60) + '...'}
-                            </p>
-                            <p className="relative w-40 right-12 top-4 text-gray-300 font-light text-sm">
-                              {i.author?.includes('https') ? '' : i.author}
-                            </p>
-                          </div>
-                        )
-                    ))}
-            </div>
+          <NewsGrid
+            showStories={showStories}
+            filtredNews={filtredNews}
+            news={news}
+          />
 
-            {/* sidebar */}
-          </section>
+          {/* sidebar */}
           <SideSheet
             showStories={showStories}
             setShowStories={setShowStories}
@@ -316,4 +235,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;

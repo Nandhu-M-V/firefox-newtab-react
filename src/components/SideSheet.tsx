@@ -14,16 +14,8 @@ import {
   SheetTitle,
   SheetDescription,
 } from '@/components/ui/sheet';
-// import { useEffect, useState } from 'react';
+import { useRef } from 'react';
 // import { Button } from './ui/button';
-// import {
-//   DropdownMenu,
-//   DropdownMenuContent,
-//   DropdownMenuGroup,
-//   DropdownMenuRadioGroup,
-//   DropdownMenuRadioItem,
-//   DropdownMenuTrigger,
-// } from './ui/dropdown-menu';
 
 type SideSheetProps = {
   showStories: boolean;
@@ -46,17 +38,15 @@ function SideSheet({
   setBackground,
   background,
 }: SideSheetProps) {
-  //   const handleRowsChange = (value: string) => {
-  //     if (value === '1' || value === '2' || value === '3') {
-  //       setRows(value);
-  //     }
-  //   };
+  const customBg = useRef<HTMLInputElement | null>(null);
 
-  //   const [customBg, setCustomBg] = useState<string>('');
-
-  //   useEffect(() => {
-  //     background = customBg;
-  //   }, [customBg]);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setBackground(imageUrl);
+    }
+  };
 
   return (
     <div>
@@ -130,12 +120,9 @@ function SideSheet({
                   <div className="w-26 h-20 flex justify-center hover:brightness-75 cursor-pointer items-center rounded-md border-2 border-dashed">
                     <input
                       type="file"
+                      ref={customBg}
                       className="opacity-0"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        console.log(file?.name);
-                        // setCustomBg(`../assets/images/${file?.name}`);
-                      }}
+                      onChange={handleFileChange}
                     />
                     <span className=" material-symbols-outlined">add</span>
                   </div>
