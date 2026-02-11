@@ -1,4 +1,4 @@
-import bgimage from '../assets/images/bg1.jpg';
+// import bgimage from '../assets/images/bg1.jpg';
 import firefoxLogo from '../assets/images/FF.png';
 import googleLogo from '../assets/images/search.png';
 import '../App.css';
@@ -31,7 +31,7 @@ function Home() {
 
   const [scrolled, setscrolled] = useState<boolean>(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [background, setBackground] = useState(bgimage);
+  const [background, setBackground] = useState('');
   const [showStories, setShowStories] = useState(false);
   const [showShorts, setShowShorts] = useState(true);
   const [rows, setRows] = useState<'1' | '2' | '3'>('1');
@@ -55,8 +55,6 @@ function Home() {
     setShortcuts((prev) => prev.filter((s) => s.url !== url));
   };
 
-  //   console.log(shortcuts);
-
   //  function to add images to shortcuts
 
   const addshortcut = (name: string, url: string) => {
@@ -71,10 +69,6 @@ function Home() {
       },
     ]);
   };
-
-  // row numbers for shortcuts ...
-
-  //   console.log(rows);
 
   //   checking scroll
 
@@ -96,8 +90,6 @@ function Home() {
 
   //  api fetching
   useEffect(() => {
-    if (!showStories) return;
-
     const fetchNews = async () => {
       try {
         const response = await axios.get(
@@ -110,6 +102,7 @@ function Home() {
           }
         );
         setnews(response.data.articles);
+        setFilterNews(response.data.articles);
       } catch (error) {
         console.log(error);
       }
@@ -123,7 +116,7 @@ function Home() {
   // }, [news]);
 
   //   console.log(import.meta.env.VITE_NEWS_API_KEY);
-  console.log(background);
+  //   console.log(background);
 
   return (
     <div id="fullcontainer" className=" overflow-hidden">

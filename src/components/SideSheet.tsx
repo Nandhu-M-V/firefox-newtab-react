@@ -1,4 +1,5 @@
 import bgimagesky from '../assets/images/Sky.jpg';
+import bgblue from '../assets/images/blue.jpg';
 import pen from '../assets/images/editpen.png';
 import bgimage from '../assets/images/bg1.jpg';
 import bgcity from '../assets/images/city.jpg';
@@ -18,7 +19,7 @@ import { useRef } from 'react';
 // import { Button } from './ui/button';
 
 type SideSheetProps = {
-  showStories: boolean;
+  showStories?: boolean;
   setShowStories: (v: boolean) => void;
   showShorts: boolean;
   setShowShorts: (v: boolean) => void;
@@ -27,6 +28,20 @@ type SideSheetProps = {
   setBackground: (img: string) => void;
   background: string;
 };
+
+type Wallpaper = {
+  label: string;
+  value: string;
+  preview?: string;
+};
+
+const wallpapers: Wallpaper[] = [
+  { label: 'Abstract', value: bgimage, preview: bgimage },
+  { label: 'Gradient', value: bgblue, preview: bgblue },
+  { label: 'Photographs', value: bgimagesky, preview: bgimagesky },
+  { label: 'Cityscapes', value: bgcity, preview: bgcity },
+  { label: 'Space', value: bgspace, preview: bgspace },
+];
 
 function SideSheet({
   showStories,
@@ -72,59 +87,40 @@ function SideSheet({
                   Reset to default
                 </p>
               </div>
-              <div className="grid grid-cols-3 grid-rows-3 gap-y-10 p-4 text-[13px] ">
-                <div className="flex flex-col items-center gap-y-0.5">
-                  <img
-                    src={bgimage}
-                    onClick={() => setBackground(bgimage)}
-                    alt="bg"
-                    className={`w-26 h-20  hover:brightness-75 cursor-pointer rounded-md ${background === bgimage ? 'border-3 border-blue-400' : ''}`}
-                  />
-                  <p>Abstract</p>
-                </div>
-                <div className="flex flex-col items-center gap-y-0.5">
+              <div className="grid grid-cols-3 grid-rows-3 gap-y-10 p-4 text-[13px]">
+                {wallpapers.map((wall) => (
                   <div
-                    className={`w-26 h-20 bg-gray-600 rounded-md hover:brightness-75 cursor-pointer ${background === '' ? 'border-3 border-blue-400' : ''}`}
-                    onClick={() => setBackground('')}
-                  ></div>
-                  <p>Solid color</p>
-                </div>
+                    key={wall.label}
+                    className="flex flex-col items-center gap-y-0.5"
+                  >
+                    {wall.preview ? (
+                      <img
+                        src={wall.preview}
+                        onClick={() => setBackground(wall.value)}
+                        alt={wall.label}
+                        className={`w-26 h-20 rounded-md hover:brightness-75 cursor-pointer ${background === wall.value ? 'border-3 border-blue-400' : ''}`}
+                      />
+                    ) : (
+                      <div
+                        onClick={() => setBackground('')}
+                        className={`w-26 h-20 bg-gray-600 rounded-md hover:brightness-75 cursor-pointer ${background === '' ? 'border-3 border-blue-400' : ''}`}
+                      />
+                    )}
+                    <p>{wall.label}</p>
+                  </div>
+                ))}
+
+                {/* Upload Section */}
+
                 <div className="flex flex-col items-center gap-y-0.5">
-                  <img
-                    src={bgimagesky}
-                    onClick={() => setBackground(bgimagesky)}
-                    alt="bg"
-                    className={`w-26 h-20 rounded-md hover:brightness-75 cursor-pointer ${background === bgimagesky ? 'border-3 border-blue-400' : ''}`}
-                  />
-                  <p>Photographs</p>
-                </div>
-                <div className="flex flex-col items-center gap-y-0.5">
-                  <img
-                    src={bgcity}
-                    onClick={() => setBackground(bgcity)}
-                    alt="CityScapes"
-                    className={`w-26 h-20 rounded-md hover:brightness-75 cursor-pointer ${background === bgcity ? 'border-3 border-blue-400' : ''}`}
-                  />
-                  <p>Cityscapes</p>
-                </div>
-                <div className="flex flex-col items-center gap-y-0.5">
-                  <img
-                    src={bgspace}
-                    onClick={() => setBackground(bgspace)}
-                    alt="Space"
-                    className={`w-26 h-20 rounded-md hover:brightness-75 cursor-pointer ${background === bgspace ? 'border-3 border-blue-400' : ''}`}
-                  />
-                  <p>Space</p>
-                </div>
-                <div className="flex flex-col items-center gap-y-0.5">
-                  <div className="w-26 h-20 flex justify-center hover:brightness-75 cursor-pointer items-center rounded-md border-2 border-dashed">
+                  <div className="w-26 h-20 flex justify-center hover:brightness-75 cursor-pointer items-center rounded-md border-2 border-dashed relative">
                     <input
                       type="file"
                       ref={customBg}
-                      className="opacity-0"
+                      className="absolute inset-0 opacity-0 cursor-pointer"
                       onChange={handleFileChange}
                     />
-                    <span className=" material-symbols-outlined">add</span>
+                    <span className="material-symbols-outlined">add</span>
                   </div>
                   <p>Upload an Image</p>
                 </div>
@@ -145,31 +141,6 @@ function SideSheet({
               <p className="text-[13px] text-gray-300">
                 Sites you save or visit
               </p>
-              {/* <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button className="bg-[#42414D] rounded-sm border cursor-pointer border-gray-500">
-                    <p className="text-xs text-gray-300">Number of rows</p>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-20 bg-[#141414] border border-gray-500 text-white">
-                  <DropdownMenuGroup>
-                    <DropdownMenuRadioGroup
-                      value={rows}
-                      onValueChange={handleRowsChange}
-                    >
-                      <DropdownMenuRadioItem value="1">
-                        1 Row
-                      </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value="2">
-                        2 Row
-                      </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value="3">
-                        3 Row
-                      </DropdownMenuRadioItem>
-                    </DropdownMenuRadioGroup>
-                  </DropdownMenuGroup>
-                </DropdownMenuContent>
-              </DropdownMenu> */}
             </div>
             <div className="pl-20 pt-4">
               <Switch
