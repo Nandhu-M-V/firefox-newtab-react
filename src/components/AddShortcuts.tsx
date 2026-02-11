@@ -20,7 +20,10 @@ export default function AddShortcuts({ onAddShortcut }: Props) {
   const [open, setOpen] = useState(false);
 
   const handleSubmit = () => {
-    if (!name || !url) return;
+    if (!name || !url) {
+      alert('Please fill both the Title and URL ');
+      return;
+    }
 
     onAddShortcut(name, url);
 

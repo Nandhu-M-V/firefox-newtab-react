@@ -120,7 +120,16 @@ function SideSheet({
                       className="absolute inset-0 opacity-0 cursor-pointer"
                       onChange={handleFileChange}
                     />
-                    <span className="material-symbols-outlined">add</span>
+                    <img
+                      className="w-26 h-20 rounded-md"
+                      src={background}
+                      alt=""
+                    />
+                    <span
+                      className={`material-symbols-outlined absolute ${background ? 'hidden' : ''}`}
+                    >
+                      add
+                    </span>
                   </div>
                   <p>Upload an Image</p>
                 </div>

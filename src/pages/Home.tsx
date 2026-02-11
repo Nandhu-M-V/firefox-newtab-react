@@ -152,7 +152,7 @@ function Home() {
             <input
               className="bg-transparent text-white h-13 w-full outline-none"
               type="search"
-              placeholder="Search with Google or enter address"
+              placeholder="Search News Stories..."
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
               onKeyDown={(e) => {
