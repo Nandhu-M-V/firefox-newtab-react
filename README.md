@@ -104,7 +104,7 @@ src/
 ### News & Stories
 ![News](./screenshots/stories.png)
 
-### News & Stories
+### Shortcuts
 ![Shortcuts](./screenshots/shortcuts.png)
 
 ### Settings / Customization Panel
