@@ -10,12 +10,12 @@ The app allows users to customize shortcuts, wallpapers, and view recommended ne
 This project recreates the core experience of Firefox’s New Tab page with customization features.
 
 ### Features
-- Google-style search bar
 - Website shortcuts with favicons
 - Add & remove shortcuts (saved using Local Storage)
 - Custom background wallpapers
 - Toggle shortcuts and recommended stories
 - News fetched using NewsAPI
+- Search feature for stories
 - Responsive layout across screen sizes
 
 ---
@@ -65,6 +65,7 @@ src/
 ├── assets/
 │   └── images/
 │       ├── bg1.jpg
+|       ├── blue.jpg
 │       ├── city.jpg
 │       ├── space.jpg
 │       └── icons & logos
@@ -74,7 +75,8 @@ src/
 │   ├── AddShortcuts.tsx    # Add shortcut dialog
 │   └── ui/                 # Reusable UI components
 │
-├── App.tsx                 # Main app logic
+├──pages/
+|   └── Home.tsx            # Main app logic             
 ├── App.css                 # Global styles
 ├── main.tsx                # Entry point
 │
@@ -101,6 +103,9 @@ src/
 
 ### News & Stories
 ![News](./screenshots/stories.png)
+
+### News & Stories
+![Shortcuts](./screenshots/shortcuts.png)
 
 ### Settings / Customization Panel
 ![Settings](./screenshots/Sidepanel.png)
